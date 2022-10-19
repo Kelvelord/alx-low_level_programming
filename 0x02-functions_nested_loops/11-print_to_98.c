@@ -1,7 +1,7 @@
-#include <stdio.h>
+#include <istdio.h>
 #include "main.h"
 /**
- * print_to_98 - Prints all numbers from input to 98
+ * print_to_98 - Print all numbers from input to 98
  * @n: the starting number
  */
 void print_to_98(int n)
@@ -12,7 +12,7 @@ void print_to_98(int n)
 	printf("%d, ", n--);
 	printf("%d\n", n);
 	}
-	else if
+	else
 	{
 	while (n < 98)
 	printf("%d, ", n++);
