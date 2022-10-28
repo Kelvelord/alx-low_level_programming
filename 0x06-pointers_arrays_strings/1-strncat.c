@@ -5,7 +5,7 @@
  * @dest: copy to
  * @src: copy from
  * @n: number of char to be copied
- * Return: the pointer to dest.
+ * Return: dest
  */
 char *_strncat(char *dest, char *src, int n)
 {
@@ -24,6 +24,5 @@ char *_strncat(char *dest, char *src, int n)
 	j++;
 	}
 	dest[i] = '\0';
-
 	return (dest);
 }
