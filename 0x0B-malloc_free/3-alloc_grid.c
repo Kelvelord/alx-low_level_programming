@@ -1,40 +1,39 @@
-#include<stdlib.h>
-#include<stdio.h>
-
+#include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
 /**
- * * alloc_grid - a function ...
- * * @width: the chaine
- * * @height:
- * * Return: 1 or 0
+ * * alloc_grid - Main Enry
+ * * @width: input
+ * * @height: input
+ * * Return: 0
  */
-
 int **alloc_grid(int width, int height)
 {
-	int **tableau2d;
+	int **grid;
 	int i, j;
 
-	if (width == 0 || height == 0)
-	return (NULL);
-	tableau2d = malloc(height * sizeof(int *));
-
-	if (tableau2d == NULL)
+	if (width <= 0 || height <= 0)
 	return (NULL);
 
-	for (i = 0; i < height; ++i)
+	grid = malloc(height * sizeof(int *));
+	if (grid == NULL)
+	return (NULL);
+
+	for (i = 0; i < height; i++)
 	{
-	tableau2d[i] = malloc(width * sizeof(int));
-	if (tableau2d[i] == NULL)
+	grid[i] = malloc(width * sizeof(int));
+	if (grid[i] == NULL)
 	{
-	for (; i >= 0; i--)
-	free(tableau2d[i]);
-	free(tableau2d);
+	while (i >= 0)
+	free(grid[i--]);
+	free(grid);
 	return (NULL);
 	}
-	}
 
-	for (i = 0; i < height; ++i)
+
 	for (j = 0; j < width; j++)
-	tableau2d[i][j] = 0;
+	grid[i][j] = 0;
+	}
 
-	return (tableau2d);
+	return (grid);
 }
