@@ -1,40 +1,36 @@
-#include <stdio.h>
 #include "main.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-
-#define BUF_SIZE 9096
 
 /**
- * read_textfile - a function ...
- * @filename: the list
- * @letters: the number
+ * read_textfile - reads a text file and prints the letters
+ * @filename: filename.
+ * @letters: numbers of letters printed.
  *
- * Return: 1 or 0
+ * Return: numbers of letters printed. It fails, returns 0.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fp, ret;
-	char buf[BUF_SIZE + 1];
-	size_t cpt = 1;
+	int fd;
+	ssize_t nrd, nwr;
+	char *buf;
 
-	if (filename == NULL)
+	if (!filename)
 		return (0);
 
-	fp = open(filename, O_RDONLY);
+	fd = open(filename, O_RDONLY);
 
-	if (fp == -1)
+	if (fd == -1)
 		return (0);
 
-	while ((ret = read(fp, buf, letters)))
-	{
-		buf[ret] = '\0';
-		printf("%s", buf);
-		cpt = cpt + ret;
-	}
+	buf = malloc(sizeof(char) * (letters));
+	if (!buf)
+		return (0);
 
-	close(fp);
-	return (cpt - 1);
+	nrd = read(fd, buf, letters);
+	nwr = write(STDOUT_FILENO, buf, nrd);
+
+	close(fd);
+
+	free(buf);
+
+	return (nwr);
 }
