@@ -1,36 +1,42 @@
-#include <stdio.h>
-#include "main.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-
-#define BUF_SIZE 9096
+#include "holberton.h"
 
 /**
- * create_file - a function ...
- * @filename: the list
- * @text_content: the number
+ * create_file - function that creates a file.
+ * @filename: filename
+ * @text_content: the content of the file
  *
- * Return: 1 or 0
+ * Return: 1 on success, -1 on failure (file can not be created, file can not
+ * be written, write “fails”, etc…)
  */
 int create_file(const char *filename, char *text_content)
 {
-	int fd;
+	int file_open, file_write, i;
 
-	if (filename == NULL)
+	if (!filename)
+	{
 		return (-1);
+	}
 
-	fd = open(filename, O_CREAT | O_RDWR, 600);
-
-	if (fd == -1)
+	file_open = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR);
+	if (file_open == -1)
+	{
 		return (-1);
+	}
 
-	chmod(filename, 644);
+	if (text_content)
+	{
+		i = 0;
+		while (text_content[i] != '\0')
+		{
+			i++;
+		}
 
-	if (text_content != NULL)
-		write(fd, text_content, strlen(text_content));
-	close(fd);
+		file_write = write(file_open, text_content, i);
+		if (file_write == -1)
+		{
+			return (-1);
+		}
+	}
+	close(file_open);
 	return (1);
 }
